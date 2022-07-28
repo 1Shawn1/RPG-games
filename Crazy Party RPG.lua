@@ -3,9 +3,8 @@
     Game: Crazy Party RPG
     GameId: 9611809130
 ]]
-
-getgenv().AutoEquipSword = true
-getgenv().KillEnemys = true
+if getgenv().Ran then return end
+getgenv().Ran = true
 local LocalPlayer = game.Players.LocalPlayer
 local Backpack = LocalPlayer.Backpack
 local Mobs = game:GetService("Workspace").Mobs
