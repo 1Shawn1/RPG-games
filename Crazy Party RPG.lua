@@ -43,26 +43,30 @@ local function UnequipTools()
 end
 
 local function AutoSword()
-    while getgenv().AutoEquipSword and wait(1) do
-        local BestSword = GetBestSword()
-        if not LocalPlayer.Character:FindFirstChild(BestSword) then
-            UnequipTools()
-            BestSword.Parent = LocalPlayer.Character
+    while wait(1) do
+        if getgenv().AutoEquipSword then
+            local BestSword = GetBestSword()
+            if not LocalPlayer.Character:FindFirstChild(BestSword) then
+                UnequipTools()
+                BestSword.Parent = LocalPlayer.Character
+            end
         end
     end
 end
 
 local function KillEnemys()
-    while getgenv().KillEnemys and wait(game:GetService("Stats").PerformanceStats.Ping:GetValue() / 750 * 2)  do
-        local MyLevel = LocalPlayer.leaderstats.Level.Value
-        for _, Mob in pairs(Mobs:GetChildren()) do
-            if Mob:FindFirstChildOfClass("Humanoid") and Mob:FindFirstChildOfClass("Humanoid").Health > 0 and Mob:FindFirstChild("MobConfig") then
-                local MobConfig = require(Mob:FindFirstChild("MobConfig"))
-                if MobConfig.LevelRequiredToKill <= MyLevel then
-                    local Part = Mob:FindFirstChildOfClass("Part")
-                    local Humanoid = Mob:FindFirstChildOfClass("Humanoid")
-                    local Sword = LocalPlayer.Character:FindFirstChildOfClass("Tool")
-                    DamageRemote:FireServer(Part, Humanoid, Sword)
+    while wait(game:GetService("Stats").PerformanceStats.Ping:GetValue() / 750 * 2)  do
+        if getgenv().KillEnemys then
+            local MyLevel = LocalPlayer.leaderstats.Level.Value
+            for _, Mob in pairs(Mobs:GetChildren()) do
+                if Mob:FindFirstChildOfClass("Humanoid") and Mob:FindFirstChildOfClass("Humanoid").Health > 0 and Mob:FindFirstChild("MobConfig") then
+                    local MobConfig = require(Mob:FindFirstChild("MobConfig"))
+                    if MobConfig.LevelRequiredToKill <= MyLevel then
+                        local Part = Mob:FindFirstChildOfClass("Part")
+                        local Humanoid = Mob:FindFirstChildOfClass("Humanoid")
+                        local Sword = LocalPlayer.Character:FindFirstChildOfClass("Tool")
+                        DamageRemote:FireServer(Part, Humanoid, Sword)
+                    end
                 end
             end
         end
